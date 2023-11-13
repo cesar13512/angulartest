@@ -215,7 +215,7 @@ export class CalendarComponent {
   async addBlock(){
 
     let component = await import ('./modalblock/modal.component')
-
+    console.log("add")
     this.modalContainer?.clear()
     const modalComponentRef = this.modalContainer?.createComponent(component.ModallazyComponent);
     modalComponentRef?.instance.closeDialog.subscribe((res)=>{
