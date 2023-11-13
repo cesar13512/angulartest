@@ -1,0 +1,124 @@
+
+<div class="container-fluid" 
+
+*ngIf="
+{ 
+  list          : list$           | async,
+  buttondisable : buttondisable$  | async,
+  title         : title$          | async,
+  buttonaction  : buttonaction$   | async
+} as vm"
+
+>
+
+  <div class="row">
+    <div class="col-sm-4 ">
+   
+    </div>
+  
+    <div class="col-sm-4 mt-5" >
+
+      
+  <div class="card shadow-lg" >
+   
+  
+    
+    <div class="card-header bg-success text-center text-white "><h5 class="p-3"> {{vm.title}}</h5></div>
+
+    <div class="card-body">
+
+      <div class="d-grid">
+        <button type="button"  (click)="login()" class="btn btn-outline-success btn-lg">Go to login page</button>
+      </div>
+      <br>
+    
+
+      <form   [formGroup]="form" (ngSubmit)="onFormSubmit()" novalidate >
+    
+       <ng-container *ngFor="let list of vm.list; let i=index;" >
+      
+         <div  [ngClass]="[list.grid, 'mb-3']" > 
+      
+          <label for="{{list.fieldName}}" class="form-label">{{list.label}} :</label>
+
+          <input  [formControlName] = "list.fieldname"  type="{{list.fieldtype}}" class="form-control"  name="{{list.fieldname}}" >
+
+          <ng-container *ngIf = "form.controls[list.fieldname].dirty && form.controls[list.fieldname].errors">
+  
+              <p 
+              class   = "text-danger"   
+              *ngIf   = "form.controls[list.fieldname].errors.required"
+              > 
+               <small>Empty {{list.label}}</small>
+              </p>
+
+              <p
+              class   = "text-danger"    
+              *ngIf   = "form.controls[list.fieldname].errors.duplicate">
+              <small>{{list.label}} already exists</small>
+              </p>
+                  
+              <p
+              class   = "text-danger"    
+              *ngIf   = "form.controls[list.fieldname].errors.pattern">
+              <small>{{list.label}} check  format</small>
+              </p>
+
+              <p
+              class   = "text-danger"    
+              *ngIf   = "form.controls[list.fieldname].errors.length">
+              <small>Make sure that the phone number 11 characters</small>
+              </p>
+
+      
+          </ng-container>
+
+        </div>
+        </ng-container>
+
+      
+      
+        <p 
+        class = "text-danger"    
+        style = "text-align: center; "
+        *ngIf = "form.errors?.match"
+        > 
+         <small>Password must be the same </small>
+        </p>
+
+      
+        <br>
+
+
+        <div class="d-grid">
+
+ 
+          <div class="d-grid">
+            <button 
+             type       = "submit"  
+             [disabled] = "vm.buttondisable || form.errors?.match || vm.buttonaction" 
+             class      = "btn btn-success btn-lg">
+              Submit  
+            </button>
+          </div>
+  
+        </div>
+      
+   
+      </form>
+
+    </div>
+   
+  </div>
+
+
+    
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

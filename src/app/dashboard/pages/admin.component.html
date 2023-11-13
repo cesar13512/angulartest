@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-success text-white">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="javascript:void(0)">Confed</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link"  [routerLink]="['dashboard']">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  [routerLink]="['list']">Supplier Account Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  [routerLink]="['member']">Member Account Management</a>
+        </li>
+   
+      </ul>
+      <form class="d-flex">
+        <button class="btn btn-default" type="button" (click)="logout()">Logout <i class="bi bi-caret-left-square-fill"></i></button>
+      </form>
+     
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container-fluid mt-3">
+  <router-outlet></router-outlet>
+  </div>

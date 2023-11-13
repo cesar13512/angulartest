@@ -1,0 +1,108 @@
+
+
+ <div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-sm-6 col-md-3">
+   
+    </div>
+    <div class="col-sm-6 col-md-6">
+
+      
+  <div class="card">
+    <div class="card-header">Admin Registration</div>
+    <div class="card-body">
+      <div class="row">
+        
+      </div>
+      
+      <button type="button"  (click)="login()" class="btn btn-secondary">Go to login page</button>
+      <br>
+      <br>
+
+  
+  
+              
+          <form   [formGroup]="adminform" (ngSubmit)="onFormSubmit()" novalidate >
+
+            <ng-container *ngFor="let admin of adminlist$ | async; let i=index;" >
+
+             <div  [className]="admin.class">
+             
+            <ng-container *ngFor="let list of admin.form" >
+            <div  [className]="list.grid">
+        
+              <label for="{{list.fieldName}}" class="form-label">{{list.label}} :</label>
+
+        
+              <input [formControlName] = "list.fieldname"  type="{{list.fieldtype}}" class="form-control"  name="{{list.fieldname}}" >
+        
+             <div  
+              *ngIf   = "!adminform.controls[list.fieldname]?.valid && (adminform.controls[list.fieldname]?.dirty || adminform.controls[list.fieldname]?.touched)">
+              <p 
+              class   = "text-danger"   
+              *ngIf   = "adminform.controls[list.fieldname].hasError('required')" > 
+              <small> Empty {{list.label}} </small></p>
+        
+             </div>
+
+             <p
+             class   = "text-danger"    
+             *ngIf   = "adminform.controls[list.fieldname].errors.finduser">
+             <small>{{list.label}} already exists</small>
+             </p>
+           
+        
+              <br>
+            </div>
+            </ng-container>
+            </div>
+            </ng-container>
+
+            <p 
+            class = "text-danger"    
+            style = "text-align: center; "
+            *ngIf = "adminform.errors?.match"
+            > 
+             <small>Password must be the same </small>
+            </p>
+
+        
+       
+       
+            <button 
+             type       = "submit"
+             [disabled] = "adminform.errors?.allvalidate"
+             class      = "btn btn-secondary">
+             Submit
+             <div *ngIf = "spinneradmin"  class="spinner-border spinner-border-sm"></div>
+            </button>
+        
+        
+        
+        
+          </form>
+          
+
+        
+            
+
+
+
+
+
+    </div>
+   
+  </div>
+
+
+    
+    </div>
+    <div class="col-sm-6 col-md-3">
+
+    </div>
+  </div>
+</div>
+
+
+
+

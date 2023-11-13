@@ -1,0 +1,70 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light text-dark border-bottom border-2 border-success shadow"
+>
+  <div class="container-fluid">
+    
+    <button class="btn btn-sm btn-outline-success d-lg-none" type="button">
+      <i class="bi bi-justify" (click)="open()"></i>
+    </button>
+
+    <a class="navbar-brand " style="font-size: 1rem; cursor: pointer">
+      <img
+        *ttIf  = "'(max-width: 767px)'"
+        src    = "../../../assets/img/sample.png"
+        alt    = ""
+        width  = "30"
+        height = "24"
+        class  = "d-inline-block align-text-top"
+      />
+      <ng-content select="title-nav"></ng-content>
+    </a>
+
+    
+    <div style="position: absolute; left: 50%; transform: translatex(-50%);" >
+      <ng-content select="form-nav"></ng-content>
+    </div> 
+     
+ 
+    <button
+      class   = "navbar-toggler"
+      type    = "button"
+      (click) = "collapse.toggle()"
+      [attr.aria-expanded]="!isCollapsed"
+    >
+      <i class="bi bi-person-circle"></i>
+    </button>
+
+    <div
+      #collapse="ngbCollapse"
+      [(ngbCollapse)]="isCollapsed"
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Welcome : {{ (user | async)?.user }}
+          </a>
+
+          <div
+            class="dropdown-menu dropdown-menu-end border border-secondary"
+            aria-labelledby="navbarDropdown"
+          >
+            <a class="dropdown-item" (click)="logout()">
+              Logout
+              <i class="bi bi-person-fill-slash"> </i>
+            </a>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>

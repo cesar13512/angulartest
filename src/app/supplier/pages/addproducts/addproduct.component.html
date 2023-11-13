@@ -1,0 +1,205 @@
+
+<div  
+  *ngIf="
+    {
+      list                       : list$                | async,
+      buttondisable              : buttondisable$       | async,
+      editable                   : editable$            | async,
+      buttonaction               : buttonaction$        | async,
+      paginate                   : paginate$            | async,
+      department                 : department$          | async,
+      subdepartment              : subdepartment$       | async,
+      subsubdepartment           : subsubdepartment$    | async,
+      employee                   : employee$            | withLoading | async
+    } as vm"
+ >
+    <div class="row">
+      <div class="col-sm-12">
+
+        <app-card width="100%" >
+              
+          <card-header>
+           {{!vm.editable?.id ? 'ADD EMPLOYEE' : 'UPDATE EMPLOYEE'}} 
+          </card-header>
+
+          <card-body>
+           
+          <form   [formGroup]="supplierform" (ngSubmit)="onFormSubmit()" novalidate  enctype="multipart/form-data" >
+          
+            <div class="row row-cols-3 gx-3 gy-3">
+
+              
+           
+                  
+
+            <ng-container *ngFor="let list of vm.list; let i=index;" >
+
+              <ng-container *ngIf="list.select">
+
+                <div  [className] = "list.grid" >
+
+                  <label  class="form-label"> Select {{list.label}} </label>
+                  
+                    <ng-container *ngIf="list.fieldname === 'department'">
+                     <span class="spinner-grow spinner-grow-sm" *ngIf = "vm.department[0]?.loading"></span>
+                    </ng-container>
+
+                    <ng-container *ngIf="list.fieldname === 'subdepartment'">
+                      <span class="spinner-grow spinner-grow-sm" *ngIf = "vm.subdepartment ? vm.subdepartment[0]?.loading : false"></span>
+                     </ng-container>
+
+                    <ng-container *ngIf="list.fieldname === 'subsubdepartment'">
+                      <span class="spinner-grow spinner-grow-sm" *ngIf = "vm.subsubdepartment ? vm.subsubdepartment[0]?.loading : false"></span>
+                     </ng-container>
+ 
+
+                  <select [formControlName]="list.fieldname" class="form-select">
+
+                    <option *ngIf = "!supplierform.controls[list.fieldname].value"  value="" selected >Choose {{list.label}} </option>
+                    <option *ngFor="let list of 
+                       list.fieldname === 'department'       ? vm.department
+                     : list.fieldname === 'subdepartment'    ? vm.subdepartment 
+                     : list.fieldname === 'subsubdepartment' ? vm.subsubdepartment 
+                     : vm.subdepartment; let i=index;" [ngValue]="list">
+                      {{ list.department ? list.department : list.subdepartment ? list.subdepartment : list.subsubdepartment }}
+                    </option>
+        
+                  </select>
+
+                  <ng-container *ngIf = "supplierform.controls[list.fieldname].dirty && supplierform.controls[list.fieldname].errors">
+                    <p
+                    class   = "text-danger"    
+                    *ngIf   = "supplierform.controls[list.fieldname].errors.required">
+                    <small> {{list.label}}  must be selected </small>
+                    </p>
+                  </ng-container>
+
+                </div>  
+
+              </ng-container>
+
+              <ng-container *ngIf="!list.select">
+              <div [className] = "list.grid" >
+                <label for="email" class="form-label">{{list.label}}:</label>
+                <input 
+                 [formControlName] = "list.fieldname" 
+                 type              = "{{list.fieldtype}}" 
+                 class             = "form-control"  
+                 name              = "{{list.fieldname}}" 
+                 [ngClass]         = "{'bg-secondary':list.fieldname === 'bioid' && vm.editable?.id }"
+                 [readonly]        = "list.fieldname === 'bioid' && vm.editable?.id"
+                 >
+                 <ng-container *ngIf = "supplierform.controls[list.fieldname].dirty && supplierform.controls[list.fieldname].errors">
+            
+                  <p 
+                   class   = "text-danger"   
+                   *ngIf   = "supplierform.controls[list.fieldname].errors.required"
+                  > 
+                   <small>Empty {{list.label}}</small>
+                  </p>
+      
+                  <p
+                   class   = "text-danger"    
+                   *ngIf   = "supplierform.controls[list.fieldname].errors.find">
+                  <small>{{list.label}} already exists</small>
+                  </p>
+
+          
+
+
+                </ng-container>
+              </div>
+            </ng-container>
+          
+           </ng-container>
+  
+             <div class="d-grid ">    
+               <button 
+                type       = "submit"  
+                [disabled] = "vm.buttondisable  || vm.buttonaction"  
+                class      = "btn btn-outline-success">
+                Submit
+              </button>
+            </div>
+  
+  
+          </div>
+          </form>
+
+          </card-body>
+        </app-card>
+      
+      
+    
+        <app-table  
+         [display]    = "vm.employee"   
+         [paginate]   = "vm.paginate"   
+         [thdata]     = "vm.list   | concatHeader" 
+         [trdata]     = "vm.employee.value ? vm.employee.value : [1,2,3,4,5]"
+         (pageChange) = "paginateList($event)"
+         >
+
+         <ng-container *tableLoad>
+          <tr>
+            <ng-container *ngFor = "let key of [1,2,3,4,5,6,7,8,9,10,11]" >
+              <td>
+                <span 
+                class = "rounded-pill" 
+                style = "
+                width   :100%;  
+                display : inline-block;
+                height  : 10px;
+                background-color :gainsboro;"></span>
+              </td>
+            </ng-container>
+          </tr>
+         </ng-container>
+
+
+          <ng-container *tableHead="let row; let index">
+            <th> {{row.label}}</th>
+          </ng-container>
+
+          <ng-container *tableData="let row; let index">
+            <tr>
+              <td>{{row.bioid}}</td>
+              <td>{{row.name}}</td>
+              <td>{{row.position}}</td>
+              <td>{{row.rate}}</td>
+              <td>{{row.cola}}</td>
+              <td>{{row.department}}</td>
+              <td>{{row.subdepartment}}</td>
+              <td>{{row.subsubdepartment}}</td>
+              <td>{{row.dm}}</td>
+              <td>
+              <button
+               type    = "button"
+               class   = "btn btn-sm btn-outline-secondary"
+               (click) = "Delete(row)"
+               >
+               Delete
+               <i class="bi bi-trash-fill"></i>
+              </button>
+              </td>
+              <td>
+              <button
+               type    = "button"
+               class   = "btn btn-sm btn-outline-secondary"
+               (click) = "Edit(row)"
+               >
+               Edit
+              <i class="bi bi-pen-fill"></i>
+             </button>
+          </td>
+            </tr>
+          
+          </ng-container>
+      
+        </app-table>
+
+        
+             
+
+      
+  </div>
+

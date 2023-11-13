@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-sm bg-success text-white">
+
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        VERIFICATION PAGE
+      </li>
+  
+    </ul>
+  </div>
+
+</nav>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+
+      
+     <div style="text-align: center;">
+      <br>
+      <div *ngIf = "spinner"  class="spinner-border spinner-border-lg"></div>
+     </div>
+
+
+     <div *ngIf = "!spinner" class="mt-4 p-5 bg-success text-white rounded text-center">
+      <h1>First Verification is Successful</h1>
+      <p> <i class="bi bi-exclamation-diamond-fill"></i>  
+        Wait for the admin to verify your Account
+      </p>
+
+      <button 
+      type       = "submit" 
+      class      = "btn btn-success btn-lg border border-white"
+      (click)    = "back()"
+      >
+      Go back to main page    </button>
+
+    </div>
+   
+
+    
+     
+    
+
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+  </div>
+

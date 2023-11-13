@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">Confirm</h6>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+     Approve Account?
+    <br>
+    <br>
+    <button (click)="ok()" type="submit" class="btn btn-primary w-100">Submit</button>
+    <br>
+  </div>

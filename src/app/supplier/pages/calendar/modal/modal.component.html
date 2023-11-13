@@ -1,0 +1,41 @@
+<div *ngIf="
+{
+  list                       : list$                | async,
+  buttondisable              : buttondisable$       | async
+} as vm" >
+<div class="modal-header" >
+
+ 
+    <h6 class="modal-title" id="modal-basic-title">Add Employee Schedule</h6>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+     <form   [formGroup]="dateform" (ngSubmit)="onFormSubmit()" novalidate >
+ 
+
+     <ng-container  *ngFor="let list of vm.list; let x = index">
+
+      
+      <ng-container *ngIf="!list.select">
+      
+          
+        <div class="mb-3">
+        <label  class="form-label">{{list.label}} :</label>
+        <input  [formControlName] = "list.fieldname"  type="{{list.fieldtype}}" class="form-control"  name="{{list.fieldname}}" >
+        </div>
+
+      </ng-container>
+
+   </ng-container>
+
+  
+      <button  [disabled] = "vm.buttondisable"   type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+
+
+   
+    <br>
+  </div>
+</div>

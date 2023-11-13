@@ -1,0 +1,77 @@
+You can add global styles to this file, and also import other style files
+
+#page-content-wrapper {
+
+}
+
+#sidebarcontainer{
+
+  background-color:#0d503c;
+  
+
+  
+}
+#sidebar #logo span {
+  
+  font-size : 16px;
+
+}
+
+#sidebar #border{
+  
+  background-color: #13795b;
+  
+}
+
+
+#sidebar .card p {
+  font-size : 14px;
+}
+
+#sidebar #menu  span {
+  
+  font-size : 12px;
+
+}
+#sidebar #menu  i {
+  
+  font-size : 20px;
+
+}
+
+#sidebar .dropdown span {
+  
+  font-size : 14px;
+
+}
+
+.bg-light-text{
+  color: #13795b;
+}
+
+@keyframes animate-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animated-opacity {
+  animation: animate-opacity 1s;
+}
+
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

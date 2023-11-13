@@ -1,0 +1,194 @@
+<div  >
+
+
+  <div class="d-flex pt-3 justify-content-start flex-nowrap pb-3">
+
+    <button
+     type     = "button"
+     class    = "me-3 btn btn-sm btn-outline-success "
+     (click)  = "addSched()"
+    >
+     Add Schedule Per Week
+
+     <span class="badge   text-bg-success">
+       <i class="bi bi-calendar-date"></i>
+     </span>
+    </button>
+ 
+    <button
+     type     = "button"
+     class    = "btn btn-sm btn-outline-success"
+     (click)  = "addBlock()"
+    >
+     Add Block
+    <span class="badge   text-bg-success">
+     <i class="bi bi-calendar-date"></i>
+    </span>
+    </button>
+ 
+  </div>
+
+  <ngb-pagination
+    size             = "sm"
+    [collectionSize] = "(paginate$ | async)?.collectionSize"
+    [maxSize]        = "5"
+    [pageSize]       = "5"
+    (pageChange)     = "paginateList($event)"
+    [rotate]         = "true"
+    [ellipses]       = "false"
+    [boundaryLinks]  = "true"
+   
+  >
+  </ngb-pagination>
+
+
+
+  <div class="container-fluid">
+    <div class="row">
+     
+    </div>
+  </div>
+
+
+  <div class="row pt-1">
+    <div class="col">
+      
+    
+      <div  cdkDropListGroup>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#home">Shift Blocks</a>
+          </li>
+        
+          
+        </ul>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane container active" id="home">
+            <div class="d-flex flex-wrap bg-light" >
+
+              <div cdkDropList [cdkDropListData]="time$ | async" (cdkDropListDropped)="drop($event)">
+
+              <ng-container *ngFor = "let key of time$ | async"  >
+
+
+                <div class="d-flex flex-column rounded-4 border border-1 p-2" cdkDrag>
+                  <div class="fw-bold h6 mb-0">IN:</div>
+                  <div class=""> <small> {{key.ontime}}   {{key.offtime}}</small></div>
+                  <div class="fw-bold h6 mb-0">OUT:</div>
+                  <div class=""><small>{{key.intime}}
+                    {{key.outtime}}</small></div>
+                 
+                </div>
+              
+    
+    
+              </ng-container>
+    
+            </div>
+
+          </div>
+
+          </div>
+  
+        </div>
+
+      
+
+      <app-table [thdata]="calendarData$ | async" [trdata]="employee$ | async">
+        
+        <ng-container *tableHead="let row; let index">
+         
+         <ng-container  *ngIf="row.header">
+          <th class="text-center" > {{row.header}} </th>
+         </ng-container>
+    
+         <ng-container  *ngIf="!row.header">
+          <th class="text-center" > {{row.d.slice(0,3)}}  {{row.day}} </th>
+         </ng-container>
+    
+        </ng-container> 
+    
+      
+    
+        
+         <ng-container *tableData="let row; let index">
+    
+          <tr>
+            
+            <td style="width: 16%;" >
+
+              <div class="d-flex flex-column justify-content-center align-content-center align-items-center">
+                <p class="mb-0 mt-0 fw-bold text-center">{{row.name}}</p>
+                <small  *ngIf="row.name !== 'REQUIRED'" class="text-muted mt-8">Ach : {{timeTotal(row)}} / Mh : {{row.maxhour15}} / Tr : {{  row.maxhour15 - timeTotal(row) }} </small>
+              </div>
+
+           
+            </td>
+            
+          
+        
+            <ng-container *ngFor="let avail of row.availdate; let i = index">
+               
+              <td class="p-2 " style="width: 16%;"  (click)="availClick(row.id,avail)"   >
+
+                <div 
+                 style                = "min-height    : 50px; " 
+                 [cdkDropListData]    = "avail.schedule" 
+                 (cdkDropListDropped) = "drop($event)"
+                 cdkDropList
+                 >
+                
+                 <div class=""     *ngFor="let avl of avail.schedule; let x = index" cdkDrag>
+
+                  <div class="row me-1 ms-1 rounded-4 shadow-lg border border-2" >
+                    <div class="col">
+
+                      <div class="d-flex flex-column">
+                        <div class="fw-bold h6 mb-0">INN:</div>
+                        <div class=""> <small> {{avl.ontime | removedatepipe}}   {{avl.offtime | removedatepipe}}</small></div>
+                        <div class="fw-bold h6 mb-0">OUT:</div>
+                        <div class=""><small>{{avl.intime | removedatepipe}}
+                          {{avl.outtime | removedatepipe}}</small></div>
+                       
+                      </div>
+                    
+                     
+                    </div>
+           
+                  
+                  </div>
+    
+                
+      
+                </div>
+
+              </div>
+             
+            
+               
+    
+              </td>
+    
+            </ng-container> 
+           
+    
+          </tr>
+        </ng-container> 
+      
+      </app-table> 
+    </div>
+    
+
+
+    </div>
+    
+  </div>
+
+
+
+<div #modalContainer></div>
+ 
+</div>

@@ -1,0 +1,303 @@
+<div
+ class  = "container-fluid" 
+ *ngIf  = "{
+ route      : route$      | async,
+ searchlist : searchlist$ | searchLoading | async
+ } as vm"
+>
+
+<ng-template #content let-offcanvas>
+  <app-offcanvas [data]="vm.route">
+    <ng-template #header>
+      <h4 class="offcanvas-title" id="offcanvas-basic-title">
+        <img
+          src="../../../assets/img/sample.png"
+          class="rounded-circle"
+          height="28"
+        />
+        Confed.org
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="offcanvas.dismiss('Cross click')"
+      ></button>
+    </ng-template>
+
+    <ng-template #list let-row let-index="index">
+      <a
+        [ngClass]="{ active: row.active }"
+        [routerLink]="[row.link]"
+        class="list-group-item list-group-item-action list-group-item-success p-3"
+      >
+        <i [className]="row.class"></i>
+        {{ row.title }}
+      </a>
+    </ng-template>
+  </app-offcanvas>
+</ng-template>
+
+<ng-template #searchform let-formGroup="formGroup" let-width="width">
+  <div [formGroup]="formGroup">
+    <div class="input-group input-group-sm" [ngStyle]="{ width: width }">
+      <input
+        type="text"
+        class="form-control"
+        formControlName="search"
+        placeholder="Search by Description"
+      />
+      <button type="button"  (click) = "searchClick2(formGroup.controls['search']?.value)"  class="btn btn-success">
+        <i class="bi-search"></i>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+ <div class="row flex-nowrap">
+  <div class="col-auto col-sm-2 pe-0 ps-0" id="sidebarcontainer">
+
+    <app-sidebar [data]="vm.route">
+
+      <ng-template #header>
+         
+
+        <div class="d-flex pt-2 align-items-center">
+  
+          <img
+            src    = "../../../assets/img/sample.png"
+            class  = "rounded-circle me-2"
+            width="50"
+            height="50"
+           />
+          
+          <div class="flex-grow-1 lh-1">          
+            Payroll Management 
+          </div>
+          
+        </div>
+  
+
+      </ng-template>
+  
+      <ng-template #list let-row let-index="index">
+  
+
+        <li class="nav-item " > 
+          
+          <div class="d-flex  ">
+   
+            <div class="flex-fill" >
+
+              <a    [routerLink] = "[row.link]" class="nav-link ps-0  pt-0 pb-0 text-start fw-normal text-decoration-none" >
+              <i    [ngClass]    = "{'text-white': row.active, 'bg-light-text':  !row.active }"  [className] = "row.class" ></i>  
+              <span [ngClass]    = "{'text-white': row.active, 'bg-light-text':  !row.active }"  class=" d-none d-sm-inline">  {{ row.title }}</span>
+             </a>
+               
+            </div>
+        
+            <div class="flex-fill" >
+              <div *ngIf = "row.active" class="float-end" style="height: 100%; width: 3px; background-color: white;"></div>
+             </div>
+         
+          </div>
+
+          </li>
+      
+         
+
+
+      
+     </ng-template>
+  
+    </app-sidebar>
+
+</div>
+
+<div class="col py-3">
+  <router-outlet></router-outlet>
+</div>
+<!--  
+  <div class=" flex-grow-1 ">
+
+    <div id="page-content-wrapper"  > -->
+
+      <!-- <app-nav
+       [template]    = "content"
+       (openEvent)   = "open($event)"
+       (logoutEvent) = "logout()"
+       padding       = "17%"
+       >
+      
+       <title-nav> Supplier Dashboard</title-nav>
+  
+        <form-nav>
+          
+          <form class="d-flex flex-column" novalidate>
+  
+            <ng-container  *ttIf="'(min-width: 768px)'">
+  
+              <div class="mx-auto bg-warning" >
+                
+              <ng-container
+               *ngTemplateOutlet="
+               searchform;
+               context: { formGroup: searchgroup, width: '350px' }"
+              >
+              </ng-container>
+              </div>
+  
+             
+            </ng-container>
+          </form>
+        </form-nav>
+      </app-nav> -->
+  
+  
+      <!-- <ng-container  *ttIf="'(min-width: 768px)'">
+      <ul-wrapper 
+       top        = "50px" 
+       [data]     = "vm.searchlist"
+       width      = "350px" 
+       translatex = "translatex(-63%)" 
+       left       = "63%"
+       >
+  
+        <li-wrapper type="loading" >
+           <ng-template #temp >
+            <li
+              class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+            >
+              Loading...
+              <div
+                class="spinner-border text-success"
+                style="width: 1.2rem; height: 1.2rem"
+                role="status"
+              ></div>
+            </li>
+          </ng-template>
+        </li-wrapper>
+  
+        <li-wrapper type="load" >
+          <ng-template #temp let-row>
+            <li
+              class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+              (click)="searchClick(row.description)"
+            >
+              {{ row.description }}
+              <i class="bi-search"></i>
+            </li>
+         </ng-template>
+       </li-wrapper>
+  
+       <li-wrapper type="notfound" >
+        <ng-template #temp>
+          <li
+          class = "list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+          >
+          List not Found
+          <i class="bi bi-x-square"></i>
+        </li>
+       </ng-template>
+     </li-wrapper>
+  
+      <li-wrapper type="empty" >
+        <ng-template #temp >
+        </ng-template>
+      </li-wrapper>
+   
+      
+      </ul-wrapper>
+     </ng-container> -->
+  
+     <!-- <router-outlet></router-outlet>
+  
+   -->
+  
+      <!-- <div class="container-fluid pt-3">
+   
+  
+        <div class="row pb-3" *ttIf="'(max-width: 767px)'">
+          <div class="col-12">
+            <form novalidate>
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      searchform;
+                      context: { formGroup: searchgroup, width: '100%' }
+                    "
+                  >
+                  </ng-container>
+                </div>
+              </div>
+  
+              <div class="d-flex">
+  
+                        <ul-wrapper [data]="vm.searchlist" width="95%">
+  
+                <li-wrapper type="loading" >
+                   <ng-template #temp >
+                    <li
+                      class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+                    >
+                      Loading...
+                      <div
+                        class="spinner-border text-success"
+                        style="width: 1.2rem; height: 1.2rem"
+                        role="status"
+                      ></div>
+                    </li>
+                  </ng-template>
+                </li-wrapper>
+        
+                <li-wrapper type="load" >
+                  <ng-template #temp let-row>
+                    <li
+                      class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+                      (click)="searchClick(row.description)"
+                    >
+                      {{ row.description }}
+                      <i class="bi-search"></i>
+                    </li>
+                 </ng-template>
+               </li-wrapper>
+        
+               <li-wrapper type="notfound" >
+                <ng-template #temp>
+                  <li
+                  class = "list-group-item list-group-item-success d-flex justify-content-between align-items-center"
+                  >
+                  List not Found
+                  <i class="bi bi-x-square"></i>
+                </li>
+               </ng-template>
+             </li-wrapper>
+        
+              <li-wrapper type="empty" >
+                <ng-template #temp >
+                </ng-template>
+              </li-wrapper>
+           
+              
+              </ul-wrapper>
+             
+              </div>
+            </form>
+          </div>
+        </div>
+        <router-outlet></router-outlet>
+      </div> -->
+    <!-- </div>
+
+</div>
+   -->
+
+
+
+
+  <!-- Page content wrapper-->
+</div>
+ 
+</div>
+

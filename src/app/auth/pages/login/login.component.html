@@ -1,0 +1,101 @@
+
+<div class="container-fluid" >
+  <div class="row">
+    <div class="col-sm-4 ">
+   
+    </div>
+    <div class="col-sm-4 mt-5" >
+
+      
+  <div class="card shadow-lg" >
+
+    
+    <div class="card-header bg-success text-center text-white "><h5 class="p-2">Login Page</h5></div>
+    <div class="card-body">
+    
+
+      <form   [formGroup]="loginform" (ngSubmit)="onFormSubmit()" novalidate >
+      
+
+        <div class="mb-3">
+
+          <label for="email" class="form-label">Account:</label>
+          <input formControlName = "user" type="text" class="form-control" placeholder="Enter  username" name="email">
+          
+          <ng-container *ngIf = "loginform.controls['user'].dirty && loginform.controls['user'].errors">
+            <p 
+             class   = "text-danger"   
+             *ngIf   = "loginform.controls['user'].errors.required"
+            > 
+            <small>Empty User</small>
+            </p>
+          </ng-container>
+
+        </div>
+      
+        <div class="mb-3">
+          
+          <label for="pwd" class="form-label">Password:</label>
+          <input formControlName = "pass"  type="password" class="form-control"  placeholder="Enter password" name="pswd">
+          
+          <ng-container *ngIf = "loginform.controls['pass'].dirty && loginform.controls['pass'].errors">
+            <p 
+            class   = "text-danger"   
+            *ngIf   = "loginform.controls['pass'].errors.required"
+            > 
+             <small>Empty Password</small>
+            </p>
+          </ng-container>
+
+        </div>
+
+        <div class="clearfix">
+          <span class="float-start"> 
+            <a  class="link-success" (click)="forgotPasswordlink()" > <i class="bi bi-exclamation-circle-fill"></i> Forgot Password</a>
+            <br><br>
+          </span>
+
+          <span class="float-end"> 
+
+            <a class="link-success" (click)="register('Supplier')" style="cursor:pointer">  <i class="bi bi-person-lines-fill"></i> Supplier Registration</a>
+            <br>
+            <br>
+            <a  class="link-success" (click)="register('Member')" style="cursor:pointer"> <i class="bi bi-person-fill"></i> Member Registration</a>
+            <br>
+            <br>
+             <a class="link-success" (click)="register('Supplier')" style="cursor:pointer">  <i class="bi bi-person-lines-fill"></i> Supplier Registration</a>
+          
+          </span>     
+        </div>
+
+        <br>
+
+
+        <div class="d-grid">
+
+          <div class="d-grid">
+            <button type="submit"  [disabled] = "checkCondition(!loginform.valid)" class="btn btn-success btn-lg">
+              Submit  
+              <span class="spinner-grow spinner-grow-sm"  *ngIf = "spinner"></span> 
+            </button>
+          </div>
+  
+        </div>
+      
+   
+      </form> 
+
+    </div>
+   
+  </div>
+
+
+    
+    </div>
+
+  </div>
+</div>
+
+
+
+

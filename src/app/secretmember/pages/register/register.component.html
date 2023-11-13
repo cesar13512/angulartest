@@ -1,0 +1,109 @@
+
+
+ <div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-sm-6 col-md-3">
+   
+    </div>
+    <div class="col-sm-6 col-md-6">
+
+      
+  <div class="card">
+    <div class="card-header">Member Registration</div>
+    <div class="card-body">
+      <div class="row">
+        
+      </div>
+      
+      <button type="button"  (click)="login()" class="btn btn-secondary">Go to login page</button>
+      <br>
+      <br>
+
+  
+  
+      <form   [formGroup]="memberform" (ngSubmit)="onFormSubmit()" novalidate >
+             
+        <ng-container *ngFor="let member of memeberlist$ | async; let i=index;" >
+         
+         <div  [className]="member.class">
+
+        <ng-container *ngFor="let list of member.form; let i=index;" >
+
+        <div  [className]="list.grid">
+    
+          <label for="{{list.fieldName}}" class="form-label">{{list.label}} :</label>
+    
+          <input [formControlName] = "list.fieldname"  type="{{list.fieldtype}}" class="form-control"  name="{{list.fieldname}}" >
+    
+         <div *ngIf = "memberform.controls[list.fieldname].dirty && memberform.controls[list.fieldname].errors">
+          <p 
+          class   = "text-danger"   
+          *ngIf   = "memberform.controls[list.fieldname].errors.required"
+          > 
+           <small>Empty {{list.label}}</small>
+          </p>
+
+          <p
+          class   = "text-danger"    
+          *ngIf   = "memberform.controls[list.fieldname].errors.finduser">
+          <small>{{list.label}} already exists</small>
+          </p>
+    
+         </div>
+
+
+    
+          <br>
+        </div>
+        </ng-container>
+         </div>
+        </ng-container>
+
+        <p 
+        class = "text-danger"    
+        style = "text-align: center; "
+        *ngIf = "memberform.errors?.match"
+        > 
+         <small>Password must be the same </small>
+        </p>
+
+
+         <br>
+      
+        <button 
+         type       = "submit" 
+         class      = "btn btn-secondary" 
+         [disabled] = "memberform.errors?.allvalidate"
+        >Submit
+        <div *ngIf = "spinnermember"  class="spinner-border spinner-border-sm"></div>
+        </button>
+    
+    
+    
+    
+      </form>
+
+
+        
+            
+
+
+
+
+
+    </div>
+   
+  </div>
+
+
+    
+    </div>
+    <div class="col-sm-6 col-md-3">
+
+    </div>
+  </div>
+</div>
+
+
+
+

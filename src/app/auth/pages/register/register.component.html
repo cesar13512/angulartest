@@ -1,0 +1,181 @@
+
+
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+
+ 
+    <div class="col-sm-4 ">
+   
+    </div>
+    <div class="col-sm-4">
+  
+
+  <div class="card shadow" 
+
+  *ngIf="
+  {
+    title         : title$         | async,
+    registerlist  : registerlist$  | async,
+    region        : region$        | async,
+    province      : province$      | async,
+    municipality  : municipality$  | async,
+    brgy          : brgy$          | async,
+    buttondisable : buttondisable$ | async,
+    buttonaction  : buttonaction$  | async
+  } as vm"
+  >
+
+      <div class="card-header bg-success text-center text-white "><h5 class="p-3">   {{vm.title}}  Registration</h5></div>
+    <div class="card-body">
+    
+
+      <div class="d-grid">
+        <button type="button"  (click)="login()" class="btn btn-outline-success btn-lg">Go to login page</button>
+      </div>
+      <br>
+          <form   [formGroup]="registrationform" (ngSubmit)="onFormSubmit()" novalidate  >
+
+            
+            <ng-container *ngFor="let list of vm.registerlist; let i=index;" >
+
+                 <ng-container *ngIf="list.select">
+
+                  <div  [ngClass]="[list.grid, 'mb-3']" >
+
+                    <label  class="form-label"> Select {{list.label}} : {{list.fieldname === 'barangay' ? '(optional)' : ''}}
+             
+                      <ng-container   *ngIf = "list.fieldname === 'region'" >
+                      <span class="spinner-grow spinner-grow-sm" *ngIf="!vm.region"> </span> 
+                      <label *ngIf="!vm.region"  >Get all Location</label>
+                      </ng-container>
+    
+                    </label>
+
+                    <select [formControlName]="list.fieldname" class="form-select">
+
+                     
+                      <option  *ngIf="registrationform.controls[list.fieldname].value === null" value="" selected >Choose {{list.label}} </option>
+                     
+                      <option  *ngIf="registrationform.controls[list.fieldname].value === ''" value="" selected >Choose   {{list.label}} </option>
+                      <option *ngFor="let list of  
+                        list.fieldname === 'region'       ? vm.region
+                      : list.fieldname === 'province'     ? vm.province
+                      : list.fieldname === 'municipality' ? vm.municipality
+                      : list.fieldname === 'barangay'     ? vm.brgy : vm.brgy; let i=index;" [ngValue]="list">
+                        {{ list }}
+                      </option>
+                    </select>
+
+
+                   
+                    <ng-container *ngIf = "registrationform.controls[list.fieldname].dirty && registrationform.controls[list.fieldname].errors">
+                      <p
+                      class   = "text-danger"    
+                      *ngIf   = "registrationform.controls[list.fieldname].errors.required">
+                      <small> {{list.label}}  must be selected </small>
+                      </p>
+                    </ng-container>
+
+                  </div>  
+
+                </ng-container>
+
+
+
+                <ng-container  *ngIf="!list.select">
+
+
+                  <div   [ngClass]="[list.grid, 'mb-3']" > 
+      
+                  <label for="{{list.fieldName}}" class="form-label">{{list.label}} :</label>
+      
+                  <input  [formControlName] = "list.fieldname"  type="{{list.fieldtype}}" class="form-control"  name="{{list.fieldname}}" >
+      
+    
+                  <ng-container *ngIf = "registrationform.controls[list.fieldname].dirty && registrationform.controls[list.fieldname].errors">
+          
+                      <p 
+                      class   = "text-danger"   
+                      *ngIf   = "registrationform.controls[list.fieldname].errors.required"
+                      > 
+                       <small>Empty {{list.label}}</small>
+                      </p>
+        
+                      <p
+                      class   = "text-danger"    
+                      *ngIf   = "registrationform.controls[list.fieldname].errors.duplicate">
+                      <small>{{list.label}} already exists</small>
+                      </p>
+                          
+                      <p
+                      class   = "text-danger"    
+                      *ngIf   = "registrationform.controls[list.fieldname].errors.pattern">
+                      <small>{{list.label}} check  format</small>
+                      </p>
+      
+                      <p
+                      class   = "text-danger"    
+                      *ngIf   = "registrationform.controls[list.fieldname].errors.length">
+                      <small>Make sure that the phone number 11 characters</small>
+                      </p>
+      
+              
+                  </ng-container>
+        
+              
+                  </div>
+
+           
+
+                </ng-container>
+
+              
+         
+            </ng-container>
+            <p 
+            class = "text-danger"    
+            style = "text-align: center; "
+            *ngIf = "registrationform.errors?.match"
+            > 
+             <small>Password must be the same </small>
+            </p>
+        
+            <br>
+            
+        
+            <div class="d-grid">
+            <button 
+            type       = "submit" 
+            class      = "btn btn-success btn-lg"
+            [disabled] = "vm.buttondisable || vm.buttonaction "
+            >
+     
+            Submit  </button>
+
+
+
+            </div>
+
+
+          </form>
+
+          
+           
+      </div>
+
+
+
+
+    </div>
+   
+  </div>
+
+</div>
+    
+    </div>
+
+
+
+
+

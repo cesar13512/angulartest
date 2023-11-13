@@ -1,0 +1,170 @@
+  
+<div class="dialog-backdrop"  ></div>
+
+<dialog open
+  class = "rounded-4 border border-2 shadow-lg card animated-opacity" 
+  style = "position: absolute;
+  top   : 5%;
+  width : 37%;
+  padding: 0;
+ "
+ *ngIf="
+ {
+   list                       : list$                | async,
+   buttondisable              : buttondisable$       | async,
+   editable                   : editable$            | async,
+   buttonaction               : buttonaction$        | async,
+   paginate                   : paginate$            | async,
+   time                       : time$                | withLoading | async
+ } as vm"
+ >
+ 
+ <div class="container-fluid pe-2 pt-2" >
+  <div class="row">
+    <div class="col ">
+      <div class="mt-2 d-flex justify-content-start  flex-wrap align-content-center">
+        <h6>{{!vm.editable?.id ? 'ADD BLOCKS' : 'UPDATE BLOCKS'}}</h6>
+      </div>
+    </div>
+    <div class="col">
+     
+      <div class="d-flex justify-content-end  flex-wrap align-content-center">
+        <button   (click) = "closeModal()" type="button" class="close" aria-label="Close" >
+          <span aria-hidden="true">&times;</span>
+        </button>
+  
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="p-0 w-100 mt-2" >
+  <div  style="height: 0.5px; background-color:gainsboro;"></div>
+</div>
+
+ 
+<div class="container-fluid pe-2 pt-2">
+  <div class="row">
+    <div class="col ">
+
+
+      <form   [formGroup]="dateform" (ngSubmit)="onFormSubmit()" novalidate  enctype="multipart/form-data" >
+        
+        <div class="row row-cols-2 gx-3 gy-2">
+    
+        <ng-container *ngFor="let list of vm.list; let i=index;" >
+    
+      
+          <div [className] = "list.grid" >
+            <label class="form-label">{{list.label}}:</label>
+            <input 
+             [formControlName] = "list.fieldname" 
+             type              = "{{list.fieldtype}}" 
+             class             = "form-control"  
+             name              = "{{list.fieldname}}" 
+             >
+             
+             <ng-container *ngIf = "dateform.controls[list.fieldname].dirty && dateform.controls[list.fieldname].errors">
+        
+              <p 
+               class   = "text-danger"   
+               *ngIf   = "dateform.controls[list.fieldname].errors.required"
+              > 
+               <small>Empty {{list.label}}</small>
+              </p>
+    
+            </ng-container>
+          </div>
+    
+      
+       </ng-container>
+    
+    
+          
+    
+    
+      </div>
+    
+        <div class="d-grid mt-3">
+    
+          <button 
+           type       = "submit"  
+           [disabled] = "vm.buttondisable || vm.buttonaction"  
+           class      = "btn btn-outline-success">
+           Submit
+
+           <span class="spinner-grow spinner-grow-sm"  *ngIf = "vm.buttonaction"></span> 
+         </button>
+          
+        </div>
+    
+    
+      </form>
+
+
+  <app-table  
+   [display]    = "vm.time"   
+   [paginate]   = "vm.paginate"   
+   [thdata]     = "vm.list   | concatHeader" 
+   [trdata]     = "vm.time.value ? vm.time.value : [1,2,3,4,5]"
+   (pageChange) = "paginateList($event)"
+  >
+
+   <ng-container *tableHead="let row; let index">
+    <th  class="text-center"> {{row.label}}</th>
+   </ng-container>
+
+   <ng-container *tableLoad>
+    <tr>
+      <ng-container *ngFor = "let key of [1,2,3,4,5,6]" >
+        <td>
+          <span 
+          class = "rounded-pill text-center" 
+          style = "
+          width   :100%;  
+          display : inline-block;
+          height  : 10px;
+          background-color :gainsboro;"></span>
+        </td>
+      </ng-container>
+    </tr>
+   </ng-container>
+
+   <ng-container *tableData="let row; let index">
+
+     <tr>
+       <td class="text-center">{{row.ontime | removedatepipe}}</td>
+       <td class="text-center">{{row.offtime  | removedatepipe}}</td>
+       <td class="text-center">{{row.intime  | removedatepipe}}</td>
+       <td class="text-center">{{row.outtime  | removedatepipe}}</td>
+       <td class="text-center">
+        <button
+         type    = "button"
+         class   = "btn btn-sm btn-outline-danger"
+         (click) = "Delete(row)"
+        >
+         <i class="bi bi-trash-fill"></i>
+        </button>
+        </td>
+        <td class="text-center">
+        <button
+         type    = "button"
+         class   = "btn btn-sm btn-outline-warning"
+         (click) = "Edit(row)"
+         >
+         <i class="bi bi-pen-fill"></i>
+        </button>
+       </td>
+     </tr>
+   
+   </ng-container>
+
+ </app-table>
+    
+    </div>
+
+  </div>
+</div>
+
+</dialog>

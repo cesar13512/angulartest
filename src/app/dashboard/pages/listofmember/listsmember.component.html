@@ -1,0 +1,198 @@
+<div class="container-fluid  ps-5 pe-5">
+
+
+
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form     novalidate >
+
+        <div class="row">
+
+          <div class="col-sm-3"> </div>
+      
+          
+          <div class="col-sm-6">
+
+
+            <div  [formGroup] = "searchgroup" class = "input-group input-group-sm mb-4 gap-1">
+          
+              <span class="input-group-text bg-success"><i class="bi bi-search text-bg-success"></i></span>
+              <input type="text" class="form-control" formControlName = "search" placeholder="Search member......">
+               
+              <label class="input-group-text text-bg-success">Filter By:</label>
+              <select class="form-select" formControlName = "filter">
+                <option value="Email Approve">Email Approve</option>
+                <option value="Status Approve">Status Approve</option>
+                <option value="Default" selected >Default</option>
+              </select>
+    
+
+                  
+            </div>
+      
+          
+          
+          </div>
+      
+          <div class="col-sm-3"></div>
+      
+         </div>
+
+      </form>
+    
+      <div class="d-flex flex-wrap align-content-center justify-content-start" >
+
+        <ng-container *ngFor="let row of  user$  | async; let i=index; trackBy: trackByFn;" >
+    
+          <div class="pe-3 ps-3 pb-4">
+    
+          <div class="card shadow border-success border-3 rounded-2"  style="width: 20rem;">
+            <div class="card-body ">
+    
+              <h5 class="card-title text-success">MEMBER INFO.</h5>
+    
+              <div class="row pb-2">
+                <div class="col-sm-3  lh-sm ">
+    
+                  <span class="rounded-circle mb-0 shadow" style="
+                  display: inline-block;
+                  width: 70px;
+                  height: 70px;
+                  background-color:#bef3db
+                  "> 
+                  
+                   <p class="mb-0 pt-2" style="text-align: center; color: #198754; font-size: 20px;">
+                    <b> {{row.createdAt | date: 'dd'}}</b> <br>
+                   </p>
+    
+                   <p class="mb-0" style="text-align: center; color: #198754; font-size: 20px;">
+                    <b  style="text-align: center; color: #198754; font-size: 20px;" > {{row.createdAt | date: 'MMM'}}</b> <br>
+    
+                   </p>
+    
+                 </span>
+    
+    
+                </div>
+                <div class="col-sm-8 pt-0  lh-1">
+    
+          
+  
+        
+
+                   <h4 class="mb-0"> {{row.user}}</h4>
+                   <small> T  : {{  row.createdAt | date:"HH:mm"}}</small> 
+                   <small> | </small> 
+                   <small> Y  : {{  row.createdAt | date:"y"}}</small>
+                   <small >  {{row.members[0].phonenumber}}</small>
+
+              
+
+    
+                </div>
+              </div>
+               
+              <div class="row pl-3">
+                <div class="col-sm-12 ps-4">
+          
+              
+    
+                  <p class="mb-1"><b>Email status Approve: </b>   
+                    <i class = "bi bi-check-circle-fill"  *ngIf = "row.verifyfirst"></i>
+                    <i class = "bi bi-x-circle-fill"      *ngIf = "!row.verifyfirst"></i>
+                  </p>
+    
+                  <p class="mb-1"><b>Status Approve : </b>   
+    
+                    <i class = "bi bi-send-check-fill"  *ngIf = "row.verifylast"></i>
+                    <i class = "bi bi-x-circle-fill"      *ngIf = "!row.verifylast"></i>
+    
+                  </p>
+    
+    
+               
+    
+    
+                </div>
+               
+              </div>
+    
+        
+    
+              <div class="clearfix">
+                <div class="float-start">
+                </div>
+                <button type="button" class=" btn btn-outline-success btn-sm  float-end "   (click)="approve(row.id)">Approve <i class="bi bi-check-circle-fill"></i></button>
+              </div>
+    
+    
+    
+    
+            </div>
+          </div>
+          
+        </div>
+    
+     
+        
+    
+    
+    
+          </ng-container  >
+    
+      </div>
+
+
+
+
+
+    </div>
+   
+  </div>
+   
+
+  <hr class="hr-success" />
+   
+  <div class="row">
+    <div class="col-sm-12">
+
+      
+      <ul class="pagination pagination-md justify-content-end pt-4">
+       
+         
+        <ng-container *ngFor="let list of paginate$ | async; let i=index;" >
+           
+            
+          <li class="page-item"><a class="page-link" (click)="paginateList(list.number)" >{{list.number}}</a></li>
+  
+     
+          </ng-container  >
+
+       
+      </ul>
+    
+    </div>
+   
+  </div>
+
+
+
+
+  
+ 
+
+
+        </div>
+
+   
+    
+
+
+
+
+
+
+
+   

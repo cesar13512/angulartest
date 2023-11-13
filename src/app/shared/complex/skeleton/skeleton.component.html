@@ -1,0 +1,29 @@
+<div
+  class     = "card shadow border-3 rounded-3"
+  style     = "cursor: pointer"
+  [ngStyle] = "{ width : getwidth }"
+>
+  <img
+    class     = "card-img-top shimmer"
+    src       = "../../../../assets/img/default.png"
+    alt       = "Card image cap"
+    style     = "width: 100%; object-fit: fill"
+    [ngStyle] = "{ height : getheight}"
+  />
+
+  <span class="border border-end border-2 border-secondary"></span>
+
+  <div class="card-body">
+
+     <ng-container *ngTemplateOutlet="skeletonbody">
+    </ng-container>
+
+  </div>
+
+
+    <ng-container *ngTemplateOutlet="skeletonfooter">
+    </ng-container>
+
+
+</div>
+

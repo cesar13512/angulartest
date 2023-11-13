@@ -1,0 +1,25 @@
+
+<div class="offcanvas-header bg-success text-white" >
+
+  <ng-container *ngTemplateOutlet="header">
+ </ng-container>
+ 
+</div>
+
+<div class="offcanvas-body p-0">
+  
+ <div class="list-group list-group-flush">
+
+  <ng-container *ngFor="let row of listdata; let i=index">
+
+   <ng-container *ngTemplateOutlet="list ; context: { $implicit: row, index : i }">
+   </ng-container>
+
+  </ng-container>
+  
+ </div>
+
+  
+</div>
+    
+

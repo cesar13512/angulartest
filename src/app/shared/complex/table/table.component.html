@@ -1,0 +1,57 @@
+
+​ <table class="table shadow table-sm">
+  <thead>
+   <tr>
+    <ng-container *ngFor="let row of getThdata; let i=index">
+
+     <ng-container *ngTemplateOutlet="thead ; context: { $implicit: row, index : i }">
+     </ng-container>
+
+     </ng-container>
+    </tr>
+  </thead>
+  
+  <tbody>
+
+    <ng-container *ngFor="let row of getTrdata; let i=index">
+      <ng-container *ngTemplateOutlet="getdisplay ? tbodyload : tbody ; context: { $implicit: row, index : i }">
+      </ng-container>
+    </ng-container>
+  
+  </tbody>
+</table>
+<div *ngIf="getdisplay ? 0 : getTrdata?.length === 0 ? true : false" class="d-flex flex-wrap mt-2 justify-content-center align-content-center shadow mb-3">
+     
+  No Records
+
+ </div>
+
+<div class="row">
+  <div class="col"> 
+
+    <div class="d-flex flex-wrap mt-2 justify-content-start align-content-center">
+     
+      Showing {{getdisplay ? 0 : getTrdata?.length}} out of {{getpaginate?.collectionSize}} entries
+ 
+     </div>
+    
+  </div>
+  <div class="col">
+    <div class="d-flex justify-content-end">
+     
+     <ngb-pagination
+      [collectionSize] = "getpaginate?.collectionSize ? getpaginate?.collectionSize : 0 "
+      [maxSize]        = "5"
+      (pageChange)     = "paginateList($event)"
+      [pageSize]       = "5"
+      [rotate]         = "true"
+      [ellipses]       = "false"
+      [boundaryLinks]  = "true">
+     </ngb-pagination>
+
+    </div>
+    
+  </div>
+</div>
+
+
