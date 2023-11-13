@@ -219,7 +219,6 @@ export class CalendarComponent {
     console.log("add")
     console.log("add")
     this.modalContainer?.clear()
-
     console.log("add")
    
     const modalComponentRef = this.modalContainer?.createComponent(component.ModallazyComponent);
