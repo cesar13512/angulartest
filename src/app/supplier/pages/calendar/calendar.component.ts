@@ -226,6 +226,9 @@ export class CalendarComponent {
     modalComponentRef?.instance.closeDialog.subscribe((res)=>{
     if(res){
       console.log("test")
+      console.log("test")
+      console.log("test")
+      console.log("test")
     this.modalContainer?.clear()
     }
     })
