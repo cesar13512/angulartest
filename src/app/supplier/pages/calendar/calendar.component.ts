@@ -225,7 +225,7 @@ export class CalendarComponent {
     const modalComponentRef = this.modalContainer?.createComponent(component.ModallazyComponent);
     modalComponentRef?.instance.closeDialog.subscribe((res)=>{
     if(res){
-      console.log("add")
+      console.log("test")
     this.modalContainer?.clear()
     }
     })
