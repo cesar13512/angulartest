@@ -76,7 +76,7 @@ export class InputService {
   
   state$ = this.query$.pipe(tap((result:any)=> {
   
-
+   //crete new array
    this.dumbdata = result.data.map((employeeinfo:any)=>{
    let newdata = {...employeeinfo,...{ availdate : calendarGenerate(), maxhour15: 48, acchour: 0 } }
    if(newdata.schedules){
@@ -90,9 +90,30 @@ export class InputService {
    }
    return newdata
    })
+ 
+   //add required table
+   let fistarr   = [
+   {...{ name      : 'REQUIRED'},
+    ...{ availdate : calendarGenerate().map((i)=>{ return {...i,...{required:[{cashier : 1, total : 1 , final: 3}]}} }) }
+   }
+   ]   
 
-   let fistarr   = [{...{name:'REQUIRED'},...{ availdate : calendarGenerate().map((i)=>{ return {...i,...{required:[]}}})}}]   
-   this.dumbdata = fistarr.concat(this.dumbdata);  
+   this.dumbdata = fistarr.concat(this.dumbdata) 
+
+ 
+   //addpoint if data is postion is the same add point
+   this.dumbdata.forEach((employeeinfo:any)=>{
+   let check = employeeinfo.availdate.find((res:any)=>{ return res.schedule.length === 1 })
+   if(check){
+   let findrequired = this.dumbdata[0].availdate.find((res:any)=>{  return res.day === check.day})
+   let addpoint     = findrequired.required.find((res:any)=>{ return Object.keys(findrequired.required[0])[0] === employeeinfo.position })
+   if(addpoint){
+   addpoint.total++ 
+   }
+   } 
+   })
+
+
 
   }), 
   map(()=>{

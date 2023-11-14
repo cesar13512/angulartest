@@ -118,21 +118,18 @@
     
           <tr>
             
-            <td style="width: 16%;" >
-
+            <td style="width: 16%; " >
               <div class="d-flex flex-column justify-content-center align-content-center align-items-center">
                 <p class="mb-0 mt-0 fw-bold text-center">{{row.name}}</p>
                 <small  *ngIf="row.name !== 'REQUIRED'" class="text-muted mt-8">Ach : {{timeTotal(row)}} / Mh : {{row.maxhour15}} / Tr : {{  row.maxhour15 - timeTotal(row) }} </small>
+                <i  *ngIf="row.name !== 'REQUIRED'" class="text-muted mt-8"> {{row.position}} </i>
               </div>
-
-           
             </td>
             
           
-        
             <ng-container *ngFor="let avail of row.availdate; let i = index">
-               
-              <td class="p-2 " style="width: 16%;"  (click)="availClick(row.id,avail)"   >
+             
+              <td class = "p-2 " style = "width: 16%;"  (click)="availClick(row.id,avail)"   >
 
                 <div 
                  style                = "min-height    : 50px; " 
@@ -141,29 +138,33 @@
                  cdkDropList
                  >
                 
-                 <div class=""     *ngFor="let avl of avail.schedule; let x = index" cdkDrag>
-
-                  <div class="row me-1 ms-1 rounded-4 shadow-lg border border-2" >
-                    <div class="col">
+                 <div *ngFor   = "let avl of avail.schedule; let x = index" cdkDrag>
+                  <div  class  = "row me-1 ms-1 rounded-4 shadow-lg border border-2" >
+                    <div class = "col">
 
                       <div class="d-flex flex-column">
-                        <div class="fw-bold h6 mb-0">INN:</div>
+                        <div class="fw-bold h6 mb-0">IN:</div>
                         <div class=""> <small> {{avl.ontime | removedatepipe}}   {{avl.offtime | removedatepipe}}</small></div>
                         <div class="fw-bold h6 mb-0">OUT:</div>
                         <div class=""><small>{{avl.intime | removedatepipe}}
                           {{avl.outtime | removedatepipe}}</small></div>
-                       
-                      </div>
-                    
-                     
-                    </div>
-           
+                       </div>
                   
+                    </div>
+                   </div>
                   </div>
-    
-                
-      
-                </div>
+
+                  <div *ngFor   = "let req of avail.required; let x = index">
+                    <div  class  = "row me-1 ms-1 rounded-4 shadow-lg border border-2" >
+                      <div class = "col">
+  
+                        <div class="d-flex flex-column">
+                          {{req | json}}
+                         </div>
+                    
+                      </div>
+                     </div>
+                   </div>
 
               </div>
              

@@ -169,6 +169,8 @@ export class CalendarComponent {
 
     this.employee$.subscribe((viewdata)=>{
       
+      console.log(viewdata)
+
       let dumb = JSON.parse(JSON.stringify(this.inputService.dumbdata))
       
       dumb.map((dumb:any)=>{
@@ -215,11 +217,7 @@ export class CalendarComponent {
   async addBlock(){
 
     let component = await import ('./modalblock/modal.component')
-    console.log("test")
-
     this.modalContainer?.clear()
-
-   
     const modalComponentRef = this.modalContainer?.createComponent(component.ModallazyComponent);
     modalComponentRef?.instance.closeDialog.subscribe((res)=>{
     if(res){
